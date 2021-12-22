@@ -11,7 +11,7 @@ public class ConcurrencyUtils {
         try {
             timeUnit.sleep(quantity);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.printf("Sleep was interrupted for thread:[ %s ] \n",Thread.currentThread().getName());
         }
     }
 }

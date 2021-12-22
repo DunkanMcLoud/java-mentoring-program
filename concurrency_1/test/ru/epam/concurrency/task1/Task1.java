@@ -42,7 +42,7 @@ public class Task1 {
 
     @Test
     public void concurrentHashMapShouldImprove() throws InterruptedException {
-        Map<Integer, Integer> concurrentHashMap = new ConcurrentHashMap<>();
+        ConcurrentHashMap<Integer, Integer> concurrentHashMap = new ConcurrentHashMap<>();
 
         Thread writerThread = new Thread(() -> {
             while (true) {
@@ -53,9 +53,9 @@ public class Task1 {
 
         Thread sumThread = new Thread(() -> {
             while (true) {
-                Integer sum = concurrentHashMap.values()
-                        .stream()
-                        .reduce(0, Integer::sum);
+
+                //todo is it safe?
+                Integer sum = concurrentHashMap.reduceValues(Runtime.getRuntime().availableProcessors(), Integer::sum);
                 concurrentHashMap.putIfAbsent(sum, sum);
             }
         });

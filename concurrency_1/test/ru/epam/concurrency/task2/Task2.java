@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -75,5 +77,41 @@ public class Task2 {
 
         TimeUnit.SECONDS.sleep(5);
     }
+
+    @Test
+    public void reentrantLockStorage() throws InterruptedException {
+        CollectionStorageRWLock collectionStorage = new CollectionStorageRWLock();
+
+        Runnable writing = () -> {
+            while (true) {
+                collectionStorage.write(ThreadLocalRandom.current().nextInt(100));
+            }
+        };
+
+        Runnable printingSum = () -> {
+            while (true) {
+                collectionStorage.printSum();
+            }
+        };
+
+        Runnable sqrSumPrinter = () -> {
+            while (true) {
+                collectionStorage.printSquareSum();
+            }
+        };
+
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.execute(writing);
+        executorService.execute(printingSum);
+        executorService.execute(sqrSumPrinter);
+
+        TimeUnit.SECONDS.sleep(5);
+
+
+        executorService.shutdownNow();
+
+    }
+
 
 }

@@ -3,6 +3,7 @@ package ru.epam.concurrency.task2;
 import java.util.Collection;
 
 public class CollectionStorage {
+
     private volatile Collection<Integer> collection;
     private final Object readLock = new Object();
     private final Object writeLock = new Object();
