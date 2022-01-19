@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Spring MVC</title>
+    <script>
+        window.onload = function () {
+            const button = document.getElementById("preloadBtn")
+            const preloadData = async () => {
+                try {
+                    const response = await fetch("http://localhost:8080/preloadData", {
+                        method: "post"
+                    })
+                    console.log(response)
+                    if (response.ok) {
+                        window.location.href = "http://localhost:8080/tickets"
+                    }
+                } catch (err) {
+                    console.error('error: ${err}')
+                }
+            };
+            button.onclick = preloadData;
+        }
+    </script>
+</head>
+<body>
+<h1>Spring MVC Application</h1>
+<p th:text="${message}"></p>
+<button id="preloadBtn">Preload Data</button>
+</body>
+</html>

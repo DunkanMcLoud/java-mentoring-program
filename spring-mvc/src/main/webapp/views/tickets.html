@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tickets</title>
+</head>
+<body>
+<div>
+    <table border="1" style="width:80vw">
+        <tr>
+            <td>Ticket Id</td>
+            <td>Event Id</td>
+            <td>User Id</td>
+            <td>Place</td>
+            <td>Category</td>
+        </tr>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.id}"/>
+            <td th:text="${ticket.eventId}"/>
+            <td th:text="${ticket.userId}"/>
+            <td th:text="${ticket.place}"/>
+            <td th:text="${ticket.category}"/>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
