@@ -1,0 +1,50 @@
+spring:
+  flyway:
+    url: jdbc:postgresql://localhost:5430/boot_db
+    #schemas: USERSERVICE
+    user: DB
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/auth/realms/SpringBootKeycloak
+            authorization-uri: http://localhost:8080/auth/realms/SpringBootKeycloak/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/auth/realms/SpringBootKeycloak/protocol/openid-connect/token
+            jwk-set-uri: http://localhost:8080/auth/realms/SpringBootKeycloak/protocol/openid-connect/certs
+            #prefer-token-info: true
+            #user-name-attribute: name
+        registration:
+          keycloak:
+            client-id: spring-auth-client
+            client-authentication-method: none
+            authorization-grant-type: authorization_code
+            #scope: openid, profile
+            #client-secret: eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhMjUzMDNlMi1iZDU5LTQzMmMtOTdkMS1hNWU1MjhiN2I5YzEifQ
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/SpringBootKeycloak/.well-known/openid-configuration
+          jwk-set-uri: http://localhost:8080/auth/realms/SpringBootKeycloak/protocol/openid-connect/certs
+database:
+  host: localhost
+  port: 5430
+  db: boot_db
+  username: DB
+  password: password
+  driver: postgresql
+server:
+  port: 8081
+  tomcat:
+    redirect-context-root:
+logging:
+  level:
+    org.springframework: debug
+
